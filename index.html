@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAFAR SAATHI — Airport lounge access, before you reach the gate.</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0d11'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='20' fill='%23e8c85a'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0d11;
+    --surface: #13161c;
+    --surface2: #1c2028;
+    --border: #252930;
+    --accent: #e8c85a;
+    --accent2: #f0a348;
+    --green: #4cba7f;
+    --red: #e05c5c;
+    --amber: #e8a23a;
+    --text: #f0eeea;
+    --muted: #6b7280;
+    --muted2: #9ca3af;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(11,13,17,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .logo {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #000;
+    font-size: 16px;
+  }
+  .header-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--muted2);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 64px 24px 48px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(232,200,90,0.12);
+    border: 1px solid rgba(232,200,90,0.3);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    font-size: 16px;
+    color: var(--muted2);
+    font-weight: 300;
+    max-width: 460px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 740px) {
+    .main { grid-template-columns: 1fr; }
+  }
+
+  /* ── PANEL ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel-header h2 {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--text);
+  }
+  .panel-header .count {
+    margin-left: auto;
+    background: var(--surface2);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: var(--muted2);
+    font-weight: 500;
+  }
+
+  /* ── CARD FORM ── */
+  .card-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted2);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  select, input[type="text"] {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+  select:focus, input[type="text"]:focus { border-color: var(--accent); }
+  select option { background: #1c2028; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn-add {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #000;
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 4px;
+  }
+  .btn-add:hover { background: #f0d470; }
+  .btn-add:active { transform: scale(0.98); }
+
+  /* ── WALLET CARDS ── */
+  .wallet-section { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .wallet-empty {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .wallet-empty .icon { font-size: 32px; margin-bottom: 10px; }
+
+  .wallet-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: slideIn 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .wallet-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+  }
+  .wallet-card.eligible::before { background: var(--green); }
+  .wallet-card.partial::before { background: var(--amber); }
+  .wallet-card.not-eligible::before { background: var(--red); }
+  .wallet-card.unknown::before { background: var(--muted); }
+
+  .wc-icon { font-size: 22px; flex-shrink: 0; }
+  .wc-info { flex: 1; min-width: 0; }
+  .wc-name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wc-sub { font-size: 11px; color: var(--muted2); margin-top: 1px; }
+  .wc-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .badge-eligible { background: rgba(76,186,127,0.15); color: var(--green); }
+  .badge-partial { background: rgba(232,162,58,0.15); color: var(--amber); }
+  .badge-no { background: rgba(224,92,92,0.15); color: var(--red); }
+  .badge-unknown { background: rgba(107,114,128,0.15); color: var(--muted2); }
+
+  .wc-remove {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 4px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .wc-remove:hover { color: var(--red); }
+
+  /* ── RESULTS PANEL ── */
+  .results-col { display: flex; flex-direction: column; gap: 20px; }
+
+  .airport-select-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+  }
+  .airport-select-bar .field { flex: 1; }
+  .btn-check {
+    padding: 11px 22px;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-check:hover { background: var(--accent); color: #000; }
+
+  /* ── RESULTS ── */
+  .results-grid { display: flex; flex-direction: column; gap: 12px; }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .result-card:hover { border-color: rgba(232,200,90,0.25); }
+
+  .rc-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .rc-network {
+    width: 36px; height: 24px;
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  .net-visa { background: #1a1f71; color: #fff; }
+  .net-mc { background: #eb001b; color: #fff; position: relative; }
+  .net-mc::after { content: 'MC'; }
+  .net-rupay { background: #006a4e; color: #fff; }
+  .net-amex { background: #007bc1; color: #fff; }
+  .net-diners { background: #004a97; color: #fff; }
+
+  .rc-main { flex: 1; min-width: 0; }
+  .rc-card-name { font-weight: 600; font-size: 15px; }
+  .rc-meta { font-size: 12px; color: var(--muted2); margin-top: 2px; }
+
+  .rc-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .status-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-yes { background: var(--green); box-shadow: 0 0 6px rgba(76,186,127,0.6); }
+  .dot-partial { background: var(--amber); box-shadow: 0 0 6px rgba(232,162,58,0.5); }
+  .dot-no { background: var(--red); }
+  .dot-unknown { background: var(--muted); }
+
+  .rc-chevron { color: var(--muted); font-size: 13px; transition: transform 0.2s; margin-left: 4px; }
+  .result-card.open .rc-chevron { transform: rotate(180deg); }
+
+  .rc-detail {
+    border-top: 1px solid var(--border);
+    padding: 16px 18px;
+    display: none;
+  }
+  .result-card.open .rc-detail { display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+    margin-bottom: 14px;
+  }
+  .detail-item .di-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 3px; }
+  .detail-item .di-val { font-size: 13px; color: var(--text); font-weight: 500; }
+
+  .condition-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--muted2);
+  }
+  .tag.warn { border-color: rgba(232,162,58,0.35); color: var(--amber); background: rgba(232,162,58,0.08); }
+  .tag.ok { border-color: rgba(76,186,127,0.3); color: var(--green); background: rgba(76,186,127,0.08); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .stat {
+    padding: 16px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-num.green { color: var(--green); }
+  .stat-num.amber { color: var(--amber); }
+  .stat-num.red { color: var(--red); }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
+
+  /* ── LOUNGE LIST ── */
+  .lounge-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .lounge-grid { display: flex; flex-direction: column; }
+  .lounge-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .lounge-row:last-child { border-bottom: none; }
+  .lounge-terminal {
+    background: var(--surface2);
+    border-radius: 5px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted2);
+    min-width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .lounge-name { flex: 1; font-weight: 500; }
+  .lounge-networks { display: flex; gap: 4px; }
+  .ln-chip {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty-results {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 56px 32px;
+    text-align: center;
+  }
+  .empty-results .big-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty-results h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .empty-results p { font-size: 13px; color: var(--muted2); max-width: 300px; margin: 0 auto; line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 32px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+</style>
+<script data-goatcounter="https://btnonline-check-my-lounge.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    CheckMyLounge
+  </div>
+  <div class="header-pill">🇮🇳 India · 2025–26</div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">✦ Stop guessing at the airport</div>
+  <h1>Check if your card gets you <span>into the lounge</span></h1>
+  <p>Add your cards, pick an airport, and see exactly which ones grant lounge access — with visit limits and spend conditions.</p>
+</div>
+
+<div class="main">
+  <!-- LEFT: Card input + wallet -->
+  <div>
+    <div class="panel">
+      <div class="panel-header">
+        <span>🪪</span>
+        <h2>Your Cards</h2>
+        <div class="count" id="cardCount">0 cards</div>
+      </div>
+      <div class="card-form">
+        <div>
+          <label>Bank / Issuer</label>
+          <select id="selBank" onchange="updateCardOptions()">
+            <option value="">Loading data...</option>
+          </select>
+        </div>
+        <div>
+          <label>Card Name / Variant</label>
+          <select id="selCard">
+            <option value="">— Select bank / issuer first —</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Type</label>
+            <select id="selType">
+              <option value="">— select —</option>
+              <option value="credit">Credit</option>
+              <option value="debit">Debit</option>
+              <option value="none">— (none) —</option>
+            </select>
+          </div>
+          <div>
+            <label>Network</label>
+            <select id="selNetwork">
+              <option value="">— select —</option>
+              <option value="visa">Visa</option>
+              <option value="mastercard">Mastercard</option>
+              <option value="rupay">RuPay</option>
+              <option value="amex">Amex</option>
+              <option value="diners">Diners Club</option>
+              <option value="none">— (none) —</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addCard()">+ Add Card to Wallet</button>
+      </div>
+
+      <div style="border-top:1px solid var(--border)">
+        <div class="panel-header" style="border-bottom:none;padding-bottom:4px">
+          <span>👛</span>
+          <h2>Wallet</h2>
+        </div>
+        <div class="wallet-section" id="walletSection">
+          <div class="wallet-empty" id="walletEmpty">
+            <div class="icon">🃏</div>
+            <div>No cards added yet.<br>Add your first card above.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Results -->
+  <div class="results-col">
+    <div class="airport-select-bar">
+      <div class="field">
+        <label>Airport</label>
+        <select id="selAirport">
+          <option value="">Loading data...</option>
+        </select>
+      </div>
+      <button class="btn-check" onclick="runCheck()">Check Eligibility →</button>
+    </div>
+
+    <div id="resultsArea">
+      <div class="empty-results">
+        <div class="big-icon">🛫</div>
+        <h3>Ready when you are</h3>
+        <p>Add your cards to the wallet and hit "Check Eligibility" to see which ones get you lounge access.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="dataStatus" style="text-align:center;padding:8px;font-size:11px;color:var(--muted)">Loading data from GitHub...</div>
+<footer>
+  Data compiled from public bank disclosures, DreamFolks, Priority Pass & card network programs · Last updated Apr 2026<br>
+  CheckMyLounge is a free tool — eligibility conditions change frequently, always verify with your bank before travel.
+</footer>
+
+<div id="toast">✓ Card added</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA — loaded from JSON files
+// ══════════════════════════════════════════════
+
+const DATA_BASE = 'https://raw.githubusercontent.com/BuildThisNextOnline/check-my-lounge/main/data/';
+
+let CARD_DB = {};
+let ELIGIBILITY = {};
+let LOUNGES = {};
+
+// Bundled fallback data (used when running locally or offline)
+const BUNDLED_CARDS    = JSON.parse("{\n  \"cards\": {\n    \"American Express\": [\n      \"Gold Card\",\n      \"Membership Rewards\",\n      \"Platinum Card\",\n      \"Platinum Reserve\",\n      \"SmartEarn\"\n    ],\n    \"AU Small Finance Bank\": [\n      \"Altura Plus\",\n      \"LIT\",\n      \"Zenith\",\n      \"Zenith+\"\n    ],\n    \"Axis Bank\": [\n      \"Ace\",\n      \"Atlas\",\n      \"Burgundy Debit\",\n      \"Flipkart Axis Bank\",\n      \"Magnus (Metal)\",\n      \"My Zone\",\n      \"Privilege\",\n      \"Reserve\",\n      \"Vistara Infinite\",\n      \"Priority Debit\",\n      \"Neo\",\n      \"Easy Debit\"\n    ],\n    \"Federal Bank\": [\n      \"Celesta (Mastercard)\",\n      \"Celesta (Visa)\",\n      \"Imperio\",\n      \"Scapia (RuPay)\",\n      \"Scapia (Visa)\",\n      \"Signet\"\n    ],\n    \"HDFC Bank\": [\n      \"Business MoneyBack\",\n      \"Diners Club Black\",\n      \"Diners Club Privilege\",\n      \"Infinia (Metal)\",\n      \"Millennia\",\n      \"MoneyBack+\",\n      \"Regalia\",\n      \"Regalia Gold\",\n      \"Swiggy HDFC Bank\",\n      \"Tata Neu Infinity\",\n      \"Tata Neu Plus\",\n      \"EasyShop Platinum Debit\",\n      \"Imperia Debit\",\n      \"Millennia Debit\",\n      \"Infiniti Debit\",\n      \"MoneyBack\",\n      \"Freedom\",\n      \"EasyShop Gold Debit\",\n      \"EasyShop Titanium Debit\"\n    ],\n    \"HSBC\": [\n      \"Live+\",\n      \"Premier\",\n      \"TravelOne\",\n      \"Visa Platinum\"\n    ],\n    \"ICICI Bank\": [\n      \"Amazon Pay ICICI\",\n      \"Coral\",\n      \"Emeralde\",\n      \"Emeralde Private Metal\",\n      \"Manchester United Platinum\",\n      \"MakeMyTrip ICICI\",\n      \"Sapphiro\",\n      \"Rubyx\",\n      \"Platinum Chip\",\n      \"Coral Paywave Debit\",\n      \"Sapphiro Debit\",\n      \"Platinum\",\n      \"Silver Debit\",\n      \"Gold Debit\",\n      \"Expressions Debit\",\n      \"Rubyx Debit\"\n    ],\n    \"IDFC FIRST Bank\": [\n      \"Classic\",\n      \"HPCL Power+\",\n      \"Millennia\",\n      \"Select\",\n      \"Vistara\",\n      \"Wealth\",\n      \"Wealth Debit\",\n      \"Select Debit\",\n      \"Visa Signature Debit\",\n      \"Visa Platinum Debit\"\n    ],\n    \"IndusInd Bank\": [\n      \"Celesta\",\n      \"EazyDiner Platinum\",\n      \"Iconia\",\n      \"Legend\",\n      \"Platinum Aura Edge\",\n      \"Pioneer Heritage\",\n      \"Pinnacle\",\n      \"World Exclusive Debit\",\n      \"Visa Signature Exclusive Debit\"\n    ],\n    \"Kotak Mahindra Bank\": [\n      \"811 Dream Different\",\n      \"League Platinum\",\n      \"Royale Signature\",\n      \"White\",\n      \"White Reserve\",\n      \"Zen Signature\",\n      \"Privy League Signature Debit\",\n      \"811\",\n      \"Classic Debit\",\n      \"Solitaire\"\n    ],\n    \"Priority Pass\": [\n      \"Priority Pass Membership\"\n    ],\n    \"RBL Bank\": [\n      \"Bank Easy\",\n      \"Insignia Preferred\",\n      \"Platinum Maxima Plus\",\n      \"World Safari\",\n      \"World Safari Lite\"\n    ],\n    \"SBI Card\": [\n      \"BPCL Octane\",\n      \"Elite\",\n      \"Pulse\",\n      \"SimplySAVE\",\n      \"Unnati\",\n      \"Platinum Debit (RuPay)\",\n      \"Platinum Debit (Visa/MC)\",\n      \"Wealth RuPay Select Debit\",\n      \"BPCL SBI\",\n      \"Classic Debit\",\n      \"Gold Debit\"\n    ],\n    \"Standard Chartered\": [\n      \"DigiSmart\",\n      \"EaseMyTrip\",\n      \"Rewards\",\n      \"Smart\",\n      \"Ultimate\"\n    ],\n    \"Yes Bank\": [\n      \"Elite+\",\n      \"Marquee\",\n      \"Reserv\",\n      \"Wellness Plus\",\n      \"Prosperity Platinum Debit\",\n      \"Classic Debit\"\n    ],\n    \"BOBCARD\": [\n      \"Eterna\",\n      \"Premier\",\n      \"Select\",\n      \"RuPay Platinum\",\n      \"Varunah Plus\",\n      \"Easy\",\n      \"RuPay Platinum DI Debit\"\n    ]\n  },\n  \"eligibility\": {\n    \"American Express::Gold Card\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"Unlimited (select Amex partner lounges)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Select Amex partner lounges\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Access at select partner lounges only, not all DreamFolks or Visa lounges\"\n      ]\n    },\n    \"American Express::Platinum Card\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass + Centurion)\",\n      \"spend_req\": null,\n      \"access_via\": \"Priority Pass + Amex Centurion\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b960,000\",\n        \"2 guests free at Priority Pass lounges\"\n      ]\n    },\n    \"American Express::Membership Rewards\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level Amex card \u2014 no lounge access\"\n      ]\n    },\n    \"American Express::SmartEarn\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Cashback-focused entry card \u2014 no lounge access\"\n      ]\n    },\n    \"American Express::Platinum Reserve\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b95,000\"\n      ]\n    },\n    \"AU Small Finance Bank::Zenith+\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"16/year (4/quarter)\",\n      \"intl_visits\": \"16/year via Priority Pass (4/quarter)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b94,999\",\n        \"0.99% forex markup\",\n        \"Spend \u20b920,000/quarter to activate domestic access\"\n      ]\n    },\n    \"AU Small Finance Bank::Zenith\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"8/year via Priority Pass (2/quarter)\",\n      \"spend_req\": \"\u20b920,000/quarter\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b97,999\",\n        \"Spend \u20b920,000/quarter to activate\"\n      ]\n    },\n    \"AU Small Finance Bank::LIT\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b920,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Customisable card \u2014 lounge benefit must be selected as an active feature\"\n      ]\n    },\n    \"AU Small Finance Bank::Altura Plus\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None (railway lounge only)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Offers 2 complimentary railway lounge visits/quarter, not airport lounges\"\n      ]\n    },\n    \"Axis Bank::Atlas\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b95,000\",\n        \"Best travel card from Axis Bank\"\n      ]\n    },\n    \"Axis Bank::Reserve\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"Priority Pass + DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Super-premium card\",\n        \"Annual fee \u20b950,000\"\n      ]\n    },\n    \"Axis Bank::Magnus (Metal)\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b912,500\",\n        \"Unlimited for primary and add-on\"\n      ]\n    },\n    \"Axis Bank::Privilege\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"Axis Bank::Burgundy Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa + DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires Burgundy banking relationship\"\n      ]\n    },\n    \"Axis Bank::Flipkart Axis Bank\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Cashback/shopping co-branded card \u2014 no lounge access\"\n      ]\n    },\n    \"Axis Bank::Ace\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Cashback-focused card \u2014 no lounge access\"\n      ]\n    },\n    \"Axis Bank::My Zone\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Popular entertainment-focused entry card \u2014 no lounge access\"\n      ]\n    },\n    \"Axis Bank::Vistara Infinite\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Co-branded with Air India (formerly Vistara)\"\n      ]\n    },\n    \"Federal Bank::Scapia (Visa)\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b910,000/month\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free card\",\n        \"Zero forex markup\",\n        \"Spend \u20b910,000/month on Visa variant to unlock lounge access for that month\",\n        \"No international lounge access\"\n      ]\n    },\n    \"Federal Bank::Scapia (RuPay)\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b915,000/month\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free card\",\n        \"Spend \u20b915,000/month on RuPay variant to unlock lounge access for that month\"\n      ]\n    },\n    \"Federal Bank::Signet\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"1/quarter\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b920,000/quarter\",\n      \"access_via\": \"Visa / Mastercard / RuPay network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Available in Visa, Mastercard, and RuPay variants\",\n        \"Spend \u20b920,000/quarter to activate next quarter's access\"\n      ]\n    },\n    \"Federal Bank::Celesta (Visa)\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"4/year\",\n      \"spend_req\": \"\u20b910,000/month\",\n      \"access_via\": \"DreamFolks + LoungeKey\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free card\",\n        \"Spend \u20b910,000/month to unlock domestic access\"\n      ]\n    },\n    \"Federal Bank::Celesta (Mastercard)\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"4/year\",\n      \"spend_req\": \"\u20b910,000/month\",\n      \"access_via\": \"DreamFolks + LoungeKey\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free card\"\n      ]\n    },\n    \"Federal Bank::Imperio\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"8/year\",\n      \"spend_req\": \"\u20b910,000/month\",\n      \"access_via\": \"DreamFolks + LoungeKey\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Premium Federal Bank card\"\n      ]\n    },\n    \"HDFC Bank::Infinia (Metal)\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"Priority Pass + DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Invite-only super-premium card\",\n        \"Annual fee \u20b912,500\",\n        \"Unlimited for primary and add-on\"\n      ]\n    },\n    \"HDFC Bank::Diners Club Black\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"Diners Club network + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b910,000\",\n        \"Requires \u20b98L spend to keep\"\n      ]\n    },\n    \"HDFC Bank::Diners Club Privilege\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"12/year (3/quarter)\",\n      \"intl_visits\": \"6/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"HDFC Bank::Regalia Gold\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"12/year (3/quarter)\",\n      \"intl_visits\": \"6/year (Priority Pass)\",\n      \"spend_req\": \"\u20b91,50,000/quarter\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b91.5L in previous quarter to get lounge vouchers for next quarter\",\n        \"Voucher-based access from June 2025\"\n      ]\n    },\n    \"HDFC Bank::Regalia\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": \"\u20b91,00,000/quarter\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b91L in previous quarter to activate lounge access\"\n      ]\n    },\n    \"HDFC Bank::Tata Neu Infinity\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": \"\u20b91,00,000/quarter\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Voucher-based lounge access from June 2025\"\n      ]\n    },\n    \"HDFC Bank::Tata Neu Plus\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b975,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Voucher-based lounge access from June 2025\"\n      ]\n    },\n    \"HDFC Bank::Millennia\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b91,00,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Voucher-based lounge access from June 2025\"\n      ]\n    },\n    \"HDFC Bank::MoneyBack+\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Cashback card \u2014 no lounge access\"\n      ]\n    },\n    \"HDFC Bank::Swiggy HDFC Bank\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Co-branded dining card \u2014 no lounge access\"\n      ]\n    },\n    \"HDFC Bank::Business MoneyBack\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Business cashback card \u2014 no lounge access\"\n      ]\n    },\n    \"HSBC::Premier\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited (Mastercard India program)\",\n      \"intl_visits\": \"Unlimited (LoungeKey, 1400+ lounges), 8 guest visits/year\",\n      \"spend_req\": null,\n      \"access_via\": \"Mastercard + LoungeKey\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires HSBC Premier banking relationship (\u20b950L TRB or \u20b93L net monthly salary)\",\n        \"Annual fee \u20b912,000 (waived on Premier relationship)\",\n        \"Network: Mastercard\"\n      ]\n    },\n    \"HSBC::Live+\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Mastercard India program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b9999 (waived on \u20b92L/year spend)\",\n        \"No international lounge access\",\n        \"Network: Mastercard\"\n      ]\n    },\n    \"HSBC::TravelOne\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"6/year\",\n      \"intl_visits\": \"4/year (LoungeKey)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + LoungeKey\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b94,999\",\n        \"Network: Mastercard\"\n      ]\n    },\n    \"HSBC::Visa Platinum\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level lifetime-free card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Emeralde\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b912,000\"\n      ]\n    },\n    \"ICICI Bank::Emeralde Private Metal\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Super-premium metal card\",\n        \"Annual fee \u20b91,99,999\"\n      ]\n    },\n    \"ICICI Bank::Sapphiro\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"16/year (4/quarter)\",\n      \"intl_visits\": \"2/year (DreamFolks intl)\",\n      \"spend_req\": \"\u20b975,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b975,000 in previous quarter to activate next quarter's access (from July 2025)\"\n      ]\n    },\n    \"ICICI Bank::Rubyx\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b975,000/quarter\",\n      \"access_via\": \"Visa / Mastercard network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Joining fee \u20b93,000; annual fee \u20b92,000 (waived on \u20b93L spend)\",\n        \"Visa variant only for airport lounge; Mastercard for railway lounge\",\n        \"Spend \u20b975,000 in quarter to unlock next quarter's access\"\n      ]\n    },\n    \"ICICI Bank::Coral\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"2/year\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b975,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b975,000 in previous quarter to activate access\"\n      ]\n    },\n    \"ICICI Bank::Amazon Pay ICICI\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Cashback co-branded card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Manchester United Platinum\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Co-branded lifestyle card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Platinum Chip\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::MakeMyTrip ICICI\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b975,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b975,000 in previous quarter to activate access\"\n      ]\n    },\n    \"IDFC FIRST Bank::Wealth\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free card\",\n        \"Best IDFC FIRST card for travel\"\n      ]\n    },\n    \"IDFC FIRST Bank::Select\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free card\"\n      ]\n    },\n    \"IDFC FIRST Bank::Classic\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free entry card \u2014 no airport lounge access\",\n        \"Offers railway lounge access only\"\n      ]\n    },\n    \"IDFC FIRST Bank::Millennia\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free entry card \u2014 no airport lounge access\",\n        \"Offers railway lounge access only\"\n      ]\n    },\n    \"IDFC FIRST Bank::HPCL Power+\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Fuel-focused co-branded card \u2014 no lounge access\"\n      ]\n    },\n    \"IDFC FIRST Bank::Vistara\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Co-branded with Air India (formerly Vistara)\"\n      ]\n    },\n    \"IndusInd Bank::Legend\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"IndusInd Bank::Pinnacle\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Super-premium IndusInd card\"\n      ]\n    },\n    \"IndusInd Bank::Pioneer Heritage\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires Pioneer Banking relationship\"\n      ]\n    },\n    \"IndusInd Bank::Iconia\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"IndusInd Bank::EazyDiner Platinum\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Dining-focused co-branded card\"\n      ]\n    },\n    \"IndusInd Bank::Platinum Aura Edge\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"IndusInd Bank::Celesta\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Premium metal card\",\n        \"Annual fee \u20b910,000\"\n      ]\n    },\n    \"Kotak Mahindra Bank::White Reserve\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"Unlimited (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"Priority Pass + DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Super-premium metal card\",\n        \"Annual fee \u20b910,000 (waived on \u20b910L spend)\",\n        \"Note: Kotak not accepting new credit card applications as of mid-2025\"\n      ]\n    },\n    \"Kotak Mahindra Bank::White\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"Priority Pass + DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b93,000 (waived on \u20b95L spend)\",\n        \"Note: Kotak not accepting new credit card applications as of mid-2025\"\n      ]\n    },\n    \"Kotak Mahindra Bank::Royale Signature\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b91,00,000/year\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"Kotak Mahindra Bank::Zen Signature\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee waived on \u20b91.5L/year spend\"\n      ]\n    },\n    \"Kotak Mahindra Bank::League Platinum\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level rewards card \u2014 no lounge access\"\n      ]\n    },\n    \"Kotak Mahindra Bank::811 Dream Different\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level digital card \u2014 no lounge access\"\n      ]\n    },\n    \"Priority Pass::Priority Pass Membership\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Varies by plan\",\n      \"intl_visits\": \"Unlimited or capped (1400+ lounges globally)\",\n      \"spend_req\": null,\n      \"access_via\": \"Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standalone membership \u2014 not a card\",\n        \"Standard plan: $99/year + $35/visit\",\n        \"Prestige plan: $429/year, unlimited visits\",\n        \"Many premium Indian credit cards include complimentary Priority Pass\"\n      ]\n    },\n    \"RBL Bank::World Safari\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"2/year + 1 extra/quarter on \u20b950K spend (Priority Pass)\",\n      \"spend_req\": \"\u20b935,000/quarter (domestic)\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b935,000 in previous quarter for domestic access\",\n        \"Zero forex markup\"\n      ]\n    },\n    \"RBL Bank::World Safari Lite\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"4/year (1/quarter)\",\n      \"spend_req\": \"\u20b950,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b950,000 in previous quarter to activate access\",\n        \"Zero forex markup\"\n      ]\n    },\n    \"RBL Bank::Insignia Preferred\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"6/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"LTF for Insignia banking relationship holders\"\n      ]\n    },\n    \"RBL Bank::Platinum Maxima Plus\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": []\n    },\n    \"RBL Bank::Bank Easy\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level card \u2014 no lounge access\"\n      ]\n    },\n    \"SBI Card::Elite\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"6/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b94,999\"\n      ]\n    },\n    \"SBI Card::BPCL Octane\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Fuel co-branded card with limited lounge access\"\n      ]\n    },\n    \"SBI Card::Pulse\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Health/wellness-focused card\"\n      ]\n    },\n    \"SBI Card::SimplySAVE\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Most popular entry-level SBI Card \u2014 no lounge access\"\n      ]\n    },\n    \"SBI Card::Unnati\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level card \u2014 no lounge access\"\n      ]\n    },\n    \"Standard Chartered::Ultimate\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"4/year (Priority Pass)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b95,000\"\n      ]\n    },\n    \"Standard Chartered::Rewards\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Mastercard India program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Zero joining fee; annual fee reversed on \u20b93L spend\"\n      ]\n    },\n    \"Standard Chartered::EaseMyTrip\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Travel co-branded card\"\n      ]\n    },\n    \"Standard Chartered::DigiSmart\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"No longer accepting new applications from Dec 2022\",\n        \"No lounge access\"\n      ]\n    },\n    \"Standard Chartered::Smart\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"N/A\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Cashback-only card \u2014 no lounge access\"\n      ]\n    },\n    \"Yes Bank::Marquee\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"24/year (6/quarter)\",\n      \"intl_visits\": \"Unlimited\",\n      \"spend_req\": \"\u20b91,00,000/quarter (domestic)\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b91L in previous quarter for domestic access (from April 2025)\",\n        \"Unlimited international lounge access for primary and add-on cardholders\",\n        \"Annual fee \u20b99,999\"\n      ]\n    },\n    \"Yes Bank::Reserv\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"12/year (3/quarter)\",\n      \"intl_visits\": \"6/year (Priority Pass)\",\n      \"spend_req\": \"\u20b91,00,000/quarter (domestic)\",\n      \"access_via\": \"DreamFolks + Priority Pass\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b91L in previous quarter for domestic access (from April 2025)\",\n        \"Previously known as YES First Exclusive\",\n        \"Annual fee \u20b92,499\"\n      ]\n    },\n    \"Yes Bank::Wellness Plus\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b950,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b950,000 in previous quarter for domestic access\"\n      ]\n    },\n    \"Yes Bank::Elite+\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"3/year\",\n      \"spend_req\": \"\u20b950,000/quarter (domestic)\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b950,000 in previous quarter for domestic access\",\n        \"Annual fee \u20b9999\"\n      ]\n    },\n    \"HDFC Bank::Imperia Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b910,000/quarter (from Jan 2026, voucher-based)\",\n      \"access_via\": \"Mastercard India program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires Imperia banking relationship\",\n        \"Voucher issued via SMS/email after meeting spend criteria\",\n        \"Network: Mastercard\"\n      ]\n    },\n    \"HDFC Bank::Millennia Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b910,000/quarter (from Jan 2026, voucher-based)\",\n      \"access_via\": \"Mastercard India program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Voucher-based access from January 2026\",\n        \"Network: Mastercard\"\n      ]\n    },\n    \"HDFC Bank::EasyShop Platinum Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b910,000/quarter (from Jan 2026, voucher-based)\",\n      \"access_via\": \"Visa / Mastercard / RuPay network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Available in Visa, Mastercard, and RuPay variants\",\n        \"Voucher-based access from January 2026\"\n      ]\n    },\n    \"HDFC Bank::Infiniti Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa / Mastercard network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"No spend condition \u2014 Infiniti is exempt from the quarterly spend requirement\",\n        \"Requires Imperia banking relationship at highest tier\"\n      ]\n    },\n    \"ICICI Bank::Sapphiro Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"16/year (4/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Mastercard India program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b91,999 + GST\",\n        \"Network: Mastercard\"\n      ]\n    },\n    \"ICICI Bank::Coral Paywave Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa / Mastercard network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b9699 + GST\",\n        \"Network: Visa or Mastercard\"\n      ]\n    },\n    \"Axis Bank::Priority Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"12/year (3/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b95,000/quarter\",\n      \"access_via\": \"Visa / Mastercard network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires Axis Priority banking relationship\",\n        \"Spend \u20b95,000 in previous quarter to unlock access\"\n      ]\n    },\n    \"IDFC FIRST Bank::Wealth Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"12/year (3/quarter, 1 companion allowed)\",\n      \"intl_visits\": \"8/year (2/quarter)\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free debit card\",\n        \"One companion allowed for domestic lounge visits\",\n        \"Network: Visa\"\n      ]\n    },\n    \"IndusInd Bank::World Exclusive Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"4/year (1/quarter)\",\n      \"spend_req\": null,\n      \"access_via\": \"Mastercard / Visa network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free debit card\",\n        \"Both domestic and international access\"\n      ]\n    },\n    \"IndusInd Bank::Visa Signature Exclusive Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"4/year (1/quarter)\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifetime free debit card\",\n        \"Network: Visa\"\n      ]\n    },\n    \"Kotak Mahindra Bank::Privy League Signature Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Mastercard / Visa network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires Kotak Privy League banking relationship\",\n        \"Note: Kotak not accepting new credit card applications \u2014 debit card status unaffected\"\n      ]\n    },\n    \"SBI Card::Platinum Debit (RuPay)\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"RuPay lounge program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Network: RuPay\",\n        \"Access at RuPay-enrolled domestic lounges only\"\n      ]\n    },\n    \"SBI Card::Platinum Debit (Visa/MC)\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa / Mastercard network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Available in Visa and Mastercard variants\"\n      ]\n    },\n    \"SBI Card::Wealth RuPay Select Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"16/year (4/quarter)\",\n      \"intl_visits\": \"2/year\",\n      \"spend_req\": null,\n      \"access_via\": \"RuPay Select program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Requires SBI Wealth account (min \u20b950L balance)\",\n        \"Network: RuPay Select\"\n      ]\n    },\n    \"Yes Bank::Prosperity Platinum Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Visa / Mastercard network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Annual fee \u20b9599 + GST\"\n      ]\n    },\n    \"BOBCARD::Eterna\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b940,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Joining fee \u20b92,499\",\n        \"Spend \u20b940,000 in previous quarter to unlock unlimited domestic lounge access\"\n      ]\n    },\n    \"BOBCARD::Premier\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"12/year (3/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b940,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Joining fee \u20b91\",\n        \"Spend \u20b940,000 in previous quarter to unlock access\"\n      ]\n    },\n    \"BOBCARD::Select\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b940,000/quarter\",\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b940,000 in previous quarter to unlock access\"\n      ]\n    },\n    \"BOBCARD::RuPay Platinum\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b940,000/quarter\",\n      \"access_via\": \"RuPay lounge program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"RuPay Platinum lounge program; spend requirement effective Jan 2025\"\n      ]\n    },\n    \"BOBCARD::Varunah Plus\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level card \u2014 no lounge access benefit\"\n      ]\n    },\n    \"BOBCARD::Easy\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level card \u2014 no lounge access benefit\"\n      ]\n    },\n    \"BOBCARD::RuPay Platinum DI Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"Up to 3/quarter (tier-based on spend)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b910,000\u2013\u20b91,00,000/quarter (tier-based)\",\n      \"access_via\": \"RuPay lounge program\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Tier 1: \u20b910,000\u2013\u20b950,000 spend \u2192 1 visit\",\n        \"Tier 2: \u20b950,001\u2013\u20b91,00,000 \u2192 2 visits\",\n        \"Tier 3: above \u20b91,00,000 \u2192 3 visits\",\n        \"Zero issuance/annual fee\"\n      ]\n    },\n    \"HDFC Bank::MoneyBack\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level cashback card \u2014 no lounge access benefit\"\n      ]\n    },\n    \"HDFC Bank::Freedom\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level card \u2014 no lounge access benefit\"\n      ]\n    },\n    \"HDFC Bank::EasyShop Gold Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standard savings account debit card \u2014 no lounge access\"\n      ]\n    },\n    \"HDFC Bank::EasyShop Titanium Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Mid-range debit card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Platinum\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Most common entry ICICI credit card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Silver Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Basic savings account debit card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Gold Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standard debit card \u2014 no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Expressions Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lifestyle variant of Coral \u2014 entry-level, no lounge access\"\n      ]\n    },\n    \"ICICI Bank::Rubyx Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": \"\u20b910,000/quarter\",\n      \"access_via\": \"Mastercard / Visa network\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Spend \u20b910,000 in previous quarter to unlock access\",\n        \"ATM withdrawal limit \u20b91.5L/day\"\n      ]\n    },\n    \"SBI Card::BPCL SBI\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Popular fuel co-branded card \u2014 no lounge access\"\n      ]\n    },\n    \"SBI Card::Classic Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standard SBI savings account debit card \u2014 no lounge access\"\n      ]\n    },\n    \"SBI Card::Gold Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Mid-range SBI debit card \u2014 no lounge access\"\n      ]\n    },\n    \"Axis Bank::Neo\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Entry-level digital card \u2014 no lounge access\"\n      ]\n    },\n    \"Axis Bank::Easy Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standard savings account debit card \u2014 no lounge access\"\n      ]\n    },\n    \"Kotak Mahindra Bank::811\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Popular zero-fee digital credit card \u2014 no lounge access\"\n      ]\n    },\n    \"Kotak Mahindra Bank::Classic Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standard 811 / savings account debit card \u2014 no lounge access\"\n      ]\n    },\n    \"IDFC FIRST Bank::Select Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter, 1 companion allowed)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Elite Assist (formerly DreamFolks)\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Lounge program moved from DreamFolks to Elite Assist from Sep 2025\",\n        \"Companion also gets complimentary access\"\n      ]\n    },\n    \"IDFC FIRST Bank::Visa Signature Debit\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"8/year (2/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Elite Assist (formerly DreamFolks)\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Network: Visa Signature\",\n        \"Lounge program moved from DreamFolks to Elite Assist from Sep 2025\"\n      ]\n    },\n    \"IDFC FIRST Bank::Visa Platinum Debit\": {\n      \"status\": \"partial\",\n      \"domestic_visits\": \"4/year (1/quarter)\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"Elite Assist (formerly DreamFolks)\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Network: Visa Platinum\",\n        \"1 self visit per quarter\"\n      ]\n    },\n    \"Yes Bank::Classic Debit\": {\n      \"status\": \"no\",\n      \"domestic_visits\": \"None\",\n      \"intl_visits\": \"None\",\n      \"spend_req\": null,\n      \"access_via\": \"None\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Standard savings account debit card \u2014 no lounge access\"\n      ]\n    },\n    \"Kotak Mahindra Bank::Solitaire\": {\n      \"status\": \"yes\",\n      \"domestic_visits\": \"Unlimited (primary + add-on)\",\n      \"intl_visits\": \"Unlimited (primary + add-on)\",\n      \"spend_req\": null,\n      \"access_via\": \"DreamFolks\",\n      \"last_verified\": \"2026-04\",\n      \"notes\": [\n        \"Invite-only metal card, lifetime free\",\n        \"2 complimentary guest visits/year for domestic, 2 for international\",\n        \"\u20b92 validation charge at domestic lounges (auto-reversed)\",\n        \"USD 1 validation charge at international lounges (auto-reversed)\",\n        \"Note: Other Kotak cards require \u20b975,000/quarter spend from June 2025 \u2014 Solitaire is exempt\"\n      ]\n    }\n  }\n}");
+const BUNDLED_AIRPORTS = JSON.parse("{\n  \"AMD\": {\n    \"name\": \"Ahmedabad (Sardar Vallabhbhai Patel)\",\n    \"lounges\": [\n      {\n        \"name\": \"Plaza Premium Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\"]\n      },\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      }\n    ]\n  },\n  \"BBI\": {\n    \"name\": \"Bhubaneswar (Biju Patnaik)\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      }\n    ]\n  },\n  \"BLR\": {\n    \"name\": \"Bengaluru (Kempegowda)\",\n    \"lounges\": [\n      {\n        \"name\": \"Plaza Premium Lounge\",\n        \"terminal\": \"T2\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      },\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"T1\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"BOM\": {\n    \"name\": \"Mumbai (Chhatrapati Shivaji Maharaj)\",\n    \"lounges\": [\n      {\n        \"name\": \"GVK Lounge\",\n        \"terminal\": \"T2 International\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"amex\", \"diners\", \"dreamfolks\", \"priority_pass\"]\n      },\n      {\n        \"name\": \"GVK Lounge\",\n        \"terminal\": \"T1 Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\"]\n      },\n      {\n        \"name\": \"Plaza Premium Lounge\",\n        \"terminal\": \"T2\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      }\n    ]\n  },\n  \"CCU\": {\n    \"name\": \"Kolkata (Netaji Subhas Chandra Bose)\",\n    \"lounges\": [\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      },\n      {\n        \"name\": \"Caf\u00e9 & Lounge\",\n        \"terminal\": \"International\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"priority_pass\"]\n      }\n    ]\n  },\n  \"COK\": {\n    \"name\": \"Kochi (Cochin International)\",\n    \"lounges\": [\n      {\n        \"name\": \"Adani Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"mastercard\", \"rupay\", \"visa\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"DEL\": {\n    \"name\": \"Delhi (Indira Gandhi International)\",\n    \"lounges\": [\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"T1 Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\"]\n      },\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"T2 Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\"]\n      },\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"T3 Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      },\n      {\n        \"name\": \"Plaza Premium Lounge\",\n        \"terminal\": \"T3 International\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"amex\", \"diners\", \"dreamfolks\", \"priority_pass\"]\n      }\n    ]\n  },\n  \"GAU\": {\n    \"name\": \"Guwahati (Lokpriya Gopinath Bordoloi)\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"mastercard\", \"rupay\", \"visa\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"GOI\": {\n    \"name\": \"Goa (Manohar International)\",\n    \"lounges\": [\n      {\n        \"name\": \"Adani Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"dreamfolks\", \"mastercard\", \"visa\"]\n      }\n    ]\n  },\n  \"HYD\": {\n    \"name\": \"Hyderabad (Rajiv Gandhi International)\",\n    \"lounges\": [\n      {\n        \"name\": \"Plaza Premium Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"diners\", \"dreamfolks\", \"mastercard\", \"priority_pass\", \"rupay\", \"visa\"]\n      },\n      {\n        \"name\": \"VITS Lounge\",\n        \"terminal\": \"International\",\n        \"networks\": [\"amex\", \"dreamfolks\", \"mastercard\", \"priority_pass\", \"visa\"]\n      }\n    ]\n  },\n  \"IXC\": {\n    \"name\": \"Chandigarh\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"mastercard\", \"rupay\", \"visa\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"JAI\": {\n    \"name\": \"Jaipur\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"mastercard\", \"rupay\", \"visa\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"LKO\": {\n    \"name\": \"Lucknow (Chaudhary Charan Singh)\",\n    \"lounges\": [\n      {\n        \"name\": \"Elysian Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"dreamfolks\", \"mastercard\", \"rupay\", \"visa\"]\n      }\n    ]\n  },\n  \"MAA\": {\n    \"name\": \"Chennai (International)\",\n    \"lounges\": [\n      {\n        \"name\": \"Encalm Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"dreamfolks\", \"mastercard\", \"priority_pass\", \"rupay\", \"visa\"]\n      },\n      {\n        \"name\": \"Plaza Premium Lounge\",\n        \"terminal\": \"International\",\n        \"networks\": [\"amex\", \"dreamfolks\", \"mastercard\", \"priority_pass\", \"visa\"]\n      }\n    ]\n  },\n  \"NAG\": {\n    \"name\": \"Nagpur (Dr. Babasaheb Ambedkar International)\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\", \"priority_pass\"]\n      },\n      {\n        \"name\": \"Mandarin Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"mastercard\", \"rupay\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"PNQ\": {\n    \"name\": \"Pune\",\n    \"lounges\": [\n      {\n        \"name\": \"Elysian Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"mastercard\", \"rupay\", \"visa\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"TRV\": {\n    \"name\": \"Thiruvananthapuram\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"mastercard\", \"rupay\", \"visa\", \"dreamfolks\"]\n      }\n    ]\n  },\n  \"VTZ\": {\n    \"name\": \"Visakhapatnam\",\n    \"lounges\": [\n      {\n        \"name\": \"The Airr Lounge and Bar\",\n        \"terminal\": \"Domestic\",\n        \"networks\": [\"visa\", \"rupay\", \"priority_pass\"]\n      }\n    ]\n  }\n}");
+
+function applyData(cardsData, airportsData, source) {
+  CARD_DB = cardsData.cards;
+  ELIGIBILITY = cardsData.eligibility;
+  Object.entries(airportsData).forEach(([code, val]) => {
+    LOUNGES[code] = val.lounges;
+  });
+  populateBankDropdown();
+  populateAirportDropdown(airportsData);
+  const status = document.getElementById('dataStatus');
+  if (source === 'live') {
+    status.textContent = 'Live data loaded ✓';
+    status.style.color = 'var(--green)';
+  } else {
+    status.textContent = 'Using bundled data (offline/local) — may not reflect latest changes';
+    status.style.color = 'var(--amber)';
+  }
+}
+
+function loadData() {
+  // Always apply bundled data immediately — page is usable instantly
+  applyData(BUNDLED_CARDS, BUNDLED_AIRPORTS, 'bundled');
+
+  // Then try to upgrade to live data from GitHub in the background
+  Promise.all([
+    fetch(DATA_BASE + 'cards.json'),
+    fetch(DATA_BASE + 'airports.json')
+  ]).then(([cardsRes, airportsRes]) => {
+    if (!cardsRes.ok || !airportsRes.ok) throw new Error('Bad response');
+    return Promise.all([cardsRes.json(), airportsRes.json()]);
+  }).then(([cardsData, airportsData]) => {
+    applyData(cardsData, airportsData, 'live');
+  }).catch(err => {
+    // Bundled data already applied — nothing more to do
+    console.info('Live data unavailable, using bundled data:', err.message);
+  });
+}
+
+function populateBankDropdown() {
+  const sel = document.getElementById('selBank');
+  const sorted = Object.keys(CARD_DB).sort((a, b) => a.localeCompare(b));
+  sel.innerHTML = '<option value="">— select —</option>' +
+    sorted.map(b => `<option>${b}</option>`).join('');
+}
+
+function populateAirportDropdown(airportsData) {
+  const sel = document.getElementById('selAirport');
+  const sorted = Object.entries(airportsData).sort((a, b) => a[1].name.localeCompare(b[1].name));
+  sel.innerHTML = '<option value="">— select —</option>' +
+    sorted.map(([code, val]) => `<option value="${code}">${code} — ${val.name}</option>`).join('');
+}
+
+const NETWORK_COLORS = {
+  visa:          { bg: '#1a1f71', label: 'VISA' },
+  mastercard:    { bg: '#880011', label: 'MC' },
+  rupay:         { bg: '#006a4e', label: 'RuPay' },
+  amex:          { bg: '#007bc1', label: 'Amex' },
+  diners:        { bg: '#004a97', label: 'Diners' },
+  priority_pass: { bg: '#7c3aed', label: 'PP' },
+  dreamfolks:    { bg: '#b45309', label: 'DF' },
+};
+
+// Access via string → which lounge network keys
+function accessViaToNetworks(accessVia) {
+  const a = (accessVia || '').toLowerCase();
+  const nets = [];
+  if (a.includes('priority pass')) nets.push('priority_pass');
+  if (a.includes('dreamfolks')) nets.push('dreamfolks');
+  if (a.includes('visa')) nets.push('visa');
+  if (a.includes('mastercard')) nets.push('mastercard');
+  if (a.includes('rupay')) nets.push('rupay');
+  if (a.includes('amex') || a.includes('centurion')) nets.push('amex');
+  if (a.includes('diners')) nets.push('diners');
+  if (a.includes('loungekey')) nets.push('visa','mastercard'); // LoungeKey typically via Visa/MC
+  return nets;
+}
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let wallet = []; // { id, bank, card, type, network, eligibility }
+
+function updateCardOptions() {
+  const bank = document.getElementById('selBank').value;
+  const sel = document.getElementById('selCard');
+  if (!bank || !CARD_DB[bank]) {
+    sel.innerHTML = '<option value="">— Select bank / issuer first —</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">— Select card —</option>' +
+    [...CARD_DB[bank]].sort((a, b) => a.localeCompare(b)).map(c => `<option>${c}</option>`).join('');
+
+  // Priority Pass has no card type or network — auto-set to none
+  if (bank === 'Priority Pass') {
+    document.getElementById('selType').value    = 'none';
+    document.getElementById('selNetwork').value = 'none';
+  } else {
+    // Reset to blank select if currently on none
+    if (document.getElementById('selType').value    === 'none') document.getElementById('selType').value    = '';
+    if (document.getElementById('selNetwork').value === 'none') document.getElementById('selNetwork').value = '';
+  }
+}
+
+function lookupEligibility(bank, card) {
+  const key = `${bank}::${card}`;
+  return ELIGIBILITY[key] || {
+    status: 'unknown',
+    domestic_visits: '?',
+    intl_visits: '?',
+    spend_req: 'Check with bank',
+    access_via: 'Unknown',
+    notes: ['No data available — verify with your bank']
+  };
+}
+
+function addCard() {
+  const bank = document.getElementById('selBank').value;
+  const card = document.getElementById('selCard').value;
+  const type = document.getElementById('selType').value;
+  const network = document.getElementById('selNetwork').value;
+
+  if (!bank || !card) { showToast('❌ Select a bank and card first'); return; }
+  if (wallet.find(c => c.bank === bank && c.card === card)) { showToast('⚠️ Card already in wallet'); return; }
+
+  const elig = lookupEligibility(bank, card);
+  wallet.push({ id: Date.now(), bank, card, type, network, eligibility: elig });
+  saveWallet();
+  renderWallet();
+  showToast('✓ Card added to wallet');
+}
+
+function removeCard(id) {
+  wallet = wallet.filter(c => c.id !== id);
+  saveWallet();
+  renderWallet();
+}
+
+const STATUS_ICONS = { yes: '🟢', partial: '🟡', no: '🔴', unknown: '⚪' };
+const STATUS_LABELS = { yes: 'Eligible', partial: 'Conditional', no: 'No Access', unknown: 'Unverified' };
+const BADGE_CLASSES = { yes: 'badge-eligible', partial: 'badge-partial', no: 'badge-no', unknown: 'badge-unknown' };
+const DOT_CLASSES = { yes: 'dot-yes', partial: 'dot-partial', no: 'dot-no', unknown: 'dot-unknown' };
+const CARD_CLASSES = { yes: 'eligible', partial: 'partial', no: 'not-eligible', unknown: 'unknown' };
+const NET_LABELS = { visa: 'Visa', mastercard: 'MC', rupay: 'RuPay', amex: 'Amex', diners: 'Diners', none: '—', '': '—' };
+
+function saveWallet() {
+  try { localStorage.setItem('cml_wallet', JSON.stringify(wallet)); } catch(e) {}
+}
+
+function loadWallet() {
+  try {
+    const saved = localStorage.getItem('cml_wallet');
+    if (saved) wallet = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function renderWallet() {
+  const section = document.getElementById('walletSection');
+  const empty = document.getElementById('walletEmpty');
+  document.getElementById('cardCount').textContent = wallet.length + (wallet.length === 1 ? ' card' : ' cards');
+
+  if (wallet.length === 0) {
+    section.innerHTML = `<div class="wallet-empty" id="walletEmpty"><div class="icon">🃏</div><div>No cards added yet.<br>Add your first card above.</div></div>`;
+    return;
+  }
+  section.innerHTML = wallet.map(c => `
+    <div class="wallet-card ${CARD_CLASSES[c.eligibility.status]}">
+      <div class="wc-icon">${c.type === 'credit' ? '💳' : '🏧'}</div>
+      <div class="wc-info">
+        <div class="wc-name">${c.card}</div>
+        <div class="wc-sub">${c.bank} · ${c.type === 'none' || !c.type ? '' : (c.type === 'credit' ? 'Credit' : 'Debit') + ' · '}${NET_LABELS[c.network] || c.network}</div>
+      </div>
+      <div class="wc-badge ${BADGE_CLASSES[c.eligibility.status]}">${STATUS_LABELS[c.eligibility.status]}</div>
+      <button class="wc-remove" onclick="removeCard(${c.id})" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function runCheck() {
+  if (wallet.length === 0) { showToast('⚠️ Add at least one card first'); return; }
+  const airport = document.getElementById('selAirport').value;
+  if (!airport) { showToast('⚠️ Select an airport first'); return; }
+  const airportText = document.getElementById('selAirport').selectedOptions[0].text;
+  const lounges = LOUNGES[airport] || [];
+
+  let yes = 0, partial = 0, no = 0;
+  wallet.forEach(c => {
+    if (c.eligibility.status === 'yes') yes++;
+    else if (c.eligibility.status === 'partial') partial++;
+    else no++;
+  });
+
+  const resultsHTML = wallet.map((c, i) => {
+    const e = c.eligibility;
+    const conditions = [];
+    if (e.spend_req) conditions.push({ warn: true, text: '₹ Spend required: ' + e.spend_req });
+    if (e.status === 'yes') conditions.push({ warn: false, text: 'Ready to use — no conditions' });
+    if (e.status === 'no') conditions.push({ warn: true, text: 'No lounge access benefit' });
+
+    const noteItems = (e.notes || []).map(n => `<div class="tag">${n}</div>`).join('');
+
+    const netClass = { visa: 'net-visa', mastercard: 'net-mc', rupay: 'net-rupay', amex: 'net-amex', diners: 'net-diners' }[c.network] || 'net-visa';
+    const netDisplay = { visa: 'VISA', mastercard: 'MC', rupay: 'RuPay', amex: 'Amex', diners: 'Diners', none: '—', '': '—' }[c.network] || c.network;
+
+    return `
+    <div class="result-card" id="rc${i}">
+      <div class="rc-header" onclick="toggleCard(${i})">
+        <div class="rc-network ${netClass}">${netDisplay}</div>
+        <div class="rc-main">
+          <div class="rc-card-name">${c.card}</div>
+          <div class="rc-meta">${c.bank} · ${c.type === 'credit' ? 'Credit' : 'Debit'}</div>
+        </div>
+        <div class="rc-status">
+          <div class="status-dot ${DOT_CLASSES[e.status]}"></div>
+          <span style="font-size:13px;font-weight:600;color:${e.status==='yes'?'var(--green)':e.status==='partial'?'var(--amber)':e.status==='no'?'var(--red)':'var(--muted2)'}">${STATUS_LABELS[e.status]}</span>
+        </div>
+        <span class="rc-chevron">▼</span>
+      </div>
+      <div class="rc-detail">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="di-label">Domestic Visits</div>
+            <div class="di-val">${e.domestic_visits}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">International Visits</div>
+            <div class="di-val">${e.intl_visits}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Access Via</div>
+            <div class="di-val">${e.access_via}</div>
+          </div>
+          <div class="detail-item">
+            <div class="di-label">Spend Condition</div>
+            <div class="di-val" style="color:${e.spend_req ? 'var(--amber)' : 'var(--green)'}">${e.spend_req || 'None'}</div>
+          </div>
+        </div>
+        ${conditions.map(cond => `<div class="tag ${cond.warn ? 'warn' : 'ok'}" style="margin-bottom:6px">${cond.warn ? '⚠ ' : '✓ '}${cond.text}</div>`).join('')}
+        ${noteItems ? `<div class="condition-tags" style="margin-top:10px">${noteItems}</div>` : ''}
+      </div>
+    </div>
+    `;
+  }).join('');
+
+  // Lounge list HTML
+  const loungeHTML = lounges.length ? lounges.map(l => {
+    const nets = l.networks.map(n => {
+      const nd = NETWORK_COLORS[n];
+      if (!nd) return '';
+      return `<span class="ln-chip" style="background:${nd.bg};color:#fff">${nd.label}</span>`;
+    }).join('');
+    return `<div class="lounge-row">
+      <div class="lounge-terminal">${l.terminal}</div>
+      <div class="lounge-name">${l.name}</div>
+      <div class="lounge-networks">${nets}</div>
+    </div>`;
+  }).join('') : `<div class="lounge-row" style="color:var(--muted);justify-content:center">Lounge data not available for this airport</div>`;
+
+  document.getElementById('resultsArea').innerHTML = `
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-num green">${yes}</div>
+        <div class="stat-label">Eligible</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num amber">${partial}</div>
+        <div class="stat-label">Conditional</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num red">${no}</div>
+        <div class="stat-label">No Access</div>
+      </div>
+    </div>
+
+    <div class="results-grid">${resultsHTML}</div>
+
+    <div class="lounge-section">
+      <div class="panel-header" style="padding:16px 16px 14px">
+        <span>🛋️</span>
+        <h2>Lounges at ${airportText.split('—')[1]?.trim() || airport}</h2>
+      </div>
+      <div class="lounge-grid">${loungeHTML}</div>
+    </div>
+
+    <div style="background:rgba(232,200,90,0.07);border:1px solid rgba(232,200,90,0.2);border-radius:12px;padding:14px 18px;font-size:12px;color:var(--muted2);line-height:1.7">
+      <strong style="color:var(--accent)">⚠ Before you fly:</strong> Lounge policies change frequently. Always verify spend eligibility, visit count, and lounge partnerships on your bank's app or website. Some lounges charge ₹2 to validate the card. Carry your boarding pass.
+    </div>
+  `;
+}
+
+function toggleCard(i) {
+  const el = document.getElementById('rc' + i);
+  el.classList.toggle('open');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Restore wallet from localStorage and kick off data load
+loadWallet();
+renderWallet();
+loadData();
+</script>
+</body>
+</html>
